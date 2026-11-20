@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b1020">
+  <title>TaskFlow — Kanban workspace</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="TaskFlow home"><span class="brand-mark"><i></i><i></i><i></i></span><span>Task<span>Flow</span></span></a>
+      <div class="topbar-actions"><a class="export-link" href="/api/export.csv" download><span>↧</span> Export CSV</a><button class="avatar" type="button" aria-label="Account">BF</button></div>
+    </header>
+
+    <main class="main-content">
+      <section class="hero"><div><p class="eyebrow">Workspace / Overview</p><h1>Good morning, Bibek <span>✦</span></h1><p class="subtitle">Keep the momentum going. Here’s what’s happening across your workspace.</p></div><button class="primary-btn" id="newTaskButton" type="button"><b>＋</b> New Task</button></section>
+
+      <section class="kpi-grid" aria-label="Workspace metrics">
+        <article class="kpi-card"><div class="kpi-icon blue">▦</div><div><p>Total Tasks</p><strong id="totalStat">—</strong></div><span class="trend">All tasks</span></article>
+        <article class="kpi-card"><div class="kpi-icon green">◔</div><div><p>Completion</p><strong id="completionStat">—</strong></div><span class="trend positive" id="completionTrend">Done</span></article>
+        <article class="kpi-card"><div class="kpi-icon violet">◒</div><div><p>In Progress</p><strong id="progressStat">—</strong></div><span class="trend">Active now</span></article>
+        <article class="kpi-card"><div class="kpi-icon coral">!</div><div><p>High-Priority Open</p><strong id="highStat">—</strong></div><span class="trend warning">Needs focus</span></article>
+      </section>
+
+      <section class="board-toolbar"><div><h2>My tasks</h2><p id="boardMeta">Loading your workspace...</p></div><div class="controls"><label class="search"><span>⌕</span><input id="searchInput" type="search" placeholder="Search tasks..." aria-label="Search tasks"></label><label class="filter"><span>Priority:</span><select id="priorityFilter" aria-label="Filter by priority"><option value="all">All priorities</option><option value="high">High</option><option value="medium">Medium</option><option value="low">Low</option></select></label></div></section>
+
+      <section class="board" id="board" aria-label="Kanban board">
+        <div class="column" data-status="todo"><div class="column-heading"><div><span class="column-dot todo-dot"></span><h3>To Do</h3><span class="count" id="todoCount">0</span></div><button class="more-button" type="button" aria-label="To Do options">•••</button></div><div class="task-list" id="todoList"></div></div>
+        <div class="column" data-status="in_progress"><div class="column-heading"><div><span class="column-dot progress-dot"></span><h3>In Progress</h3><span class="count" id="progressCount">0</span></div><button class="more-button" type="button" aria-label="In Progress options">•••</button></div><div class="task-list" id="progressList"></div></div>
+        <div class="column" data-status="done"><div class="column-heading"><div><span class="column-dot done-dot"></span><h3>Done</h3><span class="count" id="doneCount">0</span></div><button class="more-button" type="button" aria-label="Done options">•••</button></div><div class="task-list" id="doneList"></div></div>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal-backdrop" id="modalBackdrop" hidden><section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal-header"><div><p class="eyebrow">Workspace update</p><h2 id="modalTitle">Create a new task</h2></div><button class="close-button" id="closeModal" type="button" aria-label="Close dialog">×</button></div><form id="taskForm"><label>Task title <input name="title" required maxlength="120" placeholder="What needs to be done?"></label><label>Description <textarea name="description" rows="3" maxlength="500" placeholder="Add a little context..." ></textarea></label><div class="form-row"><label>Priority <select name="priority"><option value="medium">Medium</option><option value="high">High</option><option value="low">Low</option></select></label><label>Status <select name="status"><option value="todo">To Do</option><option value="in_progress">In Progress</option><option value="done">Done</option></select></label></div><label>Assignee <input name="assignee" maxlength="60" placeholder="Unassigned"></label><p class="form-error" id="formError" role="alert"></p><div class="modal-actions"><button class="secondary-btn" id="cancelModal" type="button">Cancel</button><button class="primary-btn" type="submit">Create task</button></div></form></section></div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>
