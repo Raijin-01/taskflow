@@ -11,7 +11,7 @@ class TaskApiTestCase(unittest.TestCase):
     def setUp(self):
         self.db_file = tempfile.NamedTemporaryFile(suffix=".sqlite", delete=False)
         self.db_file.close()
-        self.app = create_app(self.db_file.name)
+        self.app = create_app(db_path=self.db_file.name, seed=False)
         self.app.config["TESTING"] = True
         self.client = self.app.test_client()
 

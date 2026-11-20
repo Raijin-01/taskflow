@@ -38,10 +38,10 @@ def connect(db_path):
         connection.close()
 
 
-def initialize_database(db_path):
+def initialize_database(db_path, seed=True):
     with connect(db_path) as connection:
         connection.execute(SCHEMA)
-        if connection.execute("SELECT COUNT(*) FROM tasks").fetchone()[0] == 0:
+        if seed and connection.execute("SELECT COUNT(*) FROM tasks").fetchone()[0] == 0:
             now = datetime.now(timezone.utc).isoformat()
             connection.executemany(
                 """INSERT INTO tasks

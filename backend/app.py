@@ -15,11 +15,11 @@ VALID_PRIORITIES = {"low", "medium", "high"}
 FIELDS = {"title", "description", "status", "priority", "assignee"}
 
 
-def create_app(db_path=None):
+def create_app(db_path=None, seed=True):
     app = Flask(__name__)
     if db_path is None:
         db_path = os.path.join(os.path.dirname(__file__), "taskflow.sqlite3")
-    initialize_database(db_path)
+    initialize_database(db_path, seed=seed)
     app.config["DATABASE"] = db_path
 
     frontend_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "frontend"))
